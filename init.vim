@@ -12,6 +12,7 @@ Plug 'ryanoasis/vim-devicons'
 " LSP Plugins 
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+Plug 'kabouzeid/nvim-lspinstall'
 
 " Better syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -38,7 +39,7 @@ call plug#end()
 " Set up Treesitter
 lua<<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"python", "bash", "cpp"},
+  ensure_installed = {"python", "bash", "cpp", "go"},
   highlight = {
     enable = true
   },

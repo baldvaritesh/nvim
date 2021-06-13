@@ -1,4 +1,10 @@
 lua << EOF
+require'lspinstall'.setup()
+local servers = require'lspinstall'.installed_servers()
+for _, server in pairs(servers) do
+    require'lspconfig'[server].setup{}
+end
+
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.bashls.setup{}
 EOF
