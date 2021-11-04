@@ -1,31 +1,24 @@
-source $HOME/.config/nvim/config/sets.vim
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Manage the plugins
 call plug#begin("~/.vim/plugged")
 
-" Have a better status line
-Plug 'hoob3rt/lualine.nvim'
-Plug 'ryanoasis/vim-devicons'
+" some possible colorschemes
+Plug 'morhetz/gruvbox'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
-" LSP Plugins 
+" Setting up lsp
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
 
-" Better syntax highlighting
+" Using Snippets
+" Need to learn about snippets as well
+Plug 'L3MON4D3/LuaSnip'
+
+" Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-" Add support for doing git operations within the editor
-" Basically :Git <command>, instead of exiting outside
-Plug 'tpope/vim-fugitive'
-
-" Add Colorschemes> Tuned for gruvbox though
-Plug 'flazz/vim-colorschemes'
-
-" View complete undo history
-Plug 'mbbill/undotree'
 
 " Project Search + Finding things
 " Telescope Plugin
@@ -33,23 +26,30 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'kyazdani42/nvim-web-devicons'
+
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Set up Treesitter
-lua<<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"python", "bash", "cpp", "go"},
-  highlight = {
-    enable = true
-  },
-}
-EOF
 
 " This is Rip-Grep: for fast searches across the codebase
 if executable('rg')
     let g:rg_derive_root='true'
 endif
+
+lua require('lualine').setup()
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+  }
+}
+EOF
 
 " If matched parenthesis distracts you, can easily disable using this one
 " let loaded_matchparen = 1
@@ -57,44 +57,18 @@ endif
 " Creating the leader to issue various commands 
 let mapleader = " "
 
-" Enable lualine
-lua << EOF
-require'lualine'.setup{
-  options = { theme  = 'gruvbox' },
-}
-EOF
-
 " Set up all the sensible remaps for basic navigation
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 " Show the complete undotree 
-nnoremap <leader>u :UndotreeShow<CR>
+" nnoremap <leader>u :UndotreeShow<CR>
 " Can use :Sex!<CR> as well to open up explorer on the side
-nnoremap <leader>pv :Ex<CR>
+nnoremap <leader>pv :Lexplore<CR>
 " Resume back to the same file and use <c-6> after that for toggling
-nnoremap <leader>pr :Rex<CR>
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
 " Selecting multiple lines and moving them
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-
-" Setup the maps for telescope here
-source $HOME/.config/nvim/config/telescope.vim
-
-" Setting up the configuration for the final value
-source $HOME/.config/nvim/config/netrw.vim
-
-" Need to make sure the colors are set after the plugins are called
-"
-" If you move it to before the plug call, the highlights after colorscheme
-" will be reset
-" 
-" Ensure the colors are setup before the lsp to show those sweet error prompts
-" in the editor signcolumn
-source $HOME/.config/nvim/config/colors.vim
-
-" Creates the default language server bindings for any Python based projects
-source $HOME/.config/nvim/config/lsp.vim
