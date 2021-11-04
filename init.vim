@@ -30,8 +30,15 @@ Plug 'nvim-lualine/lualine.nvim'
 " If you want to have icons in your statusline choose one of these
 Plug 'kyazdani42/nvim-web-devicons'
 
+" Need to add support for the terraform files
+Plug 'hashivim/vim-terraform'
+
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Some simple settings for terraform files
+let g:terraform_fmt_on_save=1
+let g:terraform_align=1
 
 " This is Rip-Grep: for fast searches across the codebase
 if executable('rg')
