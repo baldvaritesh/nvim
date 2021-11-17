@@ -33,6 +33,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Need to add support for the terraform files
 Plug 'hashivim/vim-terraform'
 
+" Add plugin for git support 
+Plug 'tpope/vim-fugitive'
+
+
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

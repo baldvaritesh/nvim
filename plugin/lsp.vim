@@ -47,10 +47,15 @@ lua <<EOF
       capabilities = capabilities
     }
   end
+
 EOF
 
+autocmd FileType rst lua require'cmp'.setup.buffer {
+\   completion = { autocomplete = false }
+\ }
+
 nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
+" nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>vs :lua vim.lsp.buf.signature_help()<CR>
 nnoremap <leader>vr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>vR :lua vim.lsp.buf.rename()<CR>
